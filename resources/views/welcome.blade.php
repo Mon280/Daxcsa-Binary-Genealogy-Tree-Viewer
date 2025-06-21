@@ -32,8 +32,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active font-bold" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link font-light" href="#">About</a></li>
-                    <li class="nav-item"><a class="nav-link font-light" href="#">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link font-light" href="#tree-section">Tree</a></li>
+                    <li class="nav-item"><a class="nav-link font-light" href="#contact-section">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -64,10 +64,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <p class="purple-text font-light p-0 m-0">Create your own</p>
-                        <h2 class="font-bold mb-4">Binary Tree Visualization</h2>
-
                         @if (!$hasDistributors)
+                            <p class="purple-text font-light p-0 m-0">Create your own</p>
+                            <h2 class="font-bold mb-5">Binary Tree Visualization</h2>
                             <form id="upload-form" class="upload-form">
                                 <div class="p-4">
                                     <label for="file-upload" id="upload-label" class="file-upload-label m-0 p-0 mb-2">
@@ -88,25 +87,43 @@
                                 </div>
                             </form>
                         @else
+                            <p class="purple-text font-light p-0 m-0 cursor-pointer" onclick="confirmRestart()">Start
+                                Over</p>
+
+                            <h2 class="font-bold mb-5">Binary Tree Visualization</h2>
                             <div id="tree-container" class="text-white mt-4"></div>
                         @endif
-
                     </div>
                 </div>
             </div>
+            <button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+
+        </section>
+        <section id="contact-section">
+            <footer style="background-color: #000; color: #fff; padding: 20px 0; text-align: center;">
+                <div class="container">
+                    <p><strong>Dannya Montserrat Martínez Ramírez</strong></p>
+                    <p>Email: <a href="mailto:montserrat.mr28@gmail.com"
+                            style="color: #fff; text-decoration: underline;">montserrat.mr28@gmail.com</a></p>
+                    <p>Phone: 4444325572</p>
+                    <p>Soledad de Graciano Sánchez, S.L.P</p>
+                    <p>Thank you for considering me!</p>
+
+                </div>
+            </footer>
         </section>
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxD3F5rJkBnt/6MlQdqUlI6U8zWvZf4l+uHlr8JXZSmHJA" crossorigin="anonymous">
     </script>
-      <script>
-            window.treeDataUrl = "{{ url('/tree-data') }}";
-        console.log(treeDataUrl);
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.treeDataUrl = "{{ url('/tree-data') }}";
     </script>
     <script src="{{ asset('js/welcome.js') }}"></script>
-  
 </body>
 
 </html>

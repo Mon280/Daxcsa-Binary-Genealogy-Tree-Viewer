@@ -6,3 +6,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [DistributorController::class, 'index']);
 Route::post('/generateTree', [DistributorController::class, 'generateTree']);
 Route::get('/tree-data', [DistributorController::class, 'fetchTreeData']);
+Route::post('/reset-tree', [DistributorController::class, 'resetTree']);

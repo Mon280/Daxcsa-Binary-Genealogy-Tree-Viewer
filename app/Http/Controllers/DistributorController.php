@@ -72,4 +72,23 @@ class DistributorController extends Controller
             'relationships' => $relationships,
         ]);
     }
+
+    public function resetTree(Request $request)
+    {
+        try {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
+            DistributorRelationship::truncate();
+            Distributor::truncate();
+
+            DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

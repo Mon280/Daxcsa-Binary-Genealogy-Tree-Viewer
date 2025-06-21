@@ -3,63 +3,73 @@
 namespace App\Http\Controllers;
 
 use App\Models\Distributor;
+use App\Models\DistributorRelationship;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DistributorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('');
+        $hasDistributors = Distributor::exists();
+
+        return view('welcome', [
+            'hasDistributors' => $hasDistributors,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    public function generateTree(Request $request)
     {
-        //
+        $file = $request->file('file');
+        $content = file_get_contents($file->getRealPath());
+        $jsonData = json_decode($content, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return response()->json(['error' => 'Invalid JSON file.'], 422);
+        }
+
+        DB::transaction(function () use ($jsonData) {
+            $this->saveDistributors($jsonData['data']['attributes']);
+        });
+
+        return response()->json(['message' => 'JSON processed successfully.']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    private function saveDistributors(array $distributors, ?int $parentId = null): void
     {
-        //
+        foreach ($distributors as $dist) {
+            $distributor = Distributor::create([
+                'username' => $dist['username'],
+                'num_children' => $dist['num_children'],
+                'full_name' => $dist['full_name'],
+                'status' => $dist['status'],
+                'product_name' => $dist['product_name'],
+                'category_name' => $dist['category_name'],
+            ]);
+
+            if ($parentId) {
+                DistributorRelationship::create([
+                    'parent_id' => $parentId,
+                    'child_id' => $distributor->id,
+                    'binary_placement' => $dist['binary_placement'],
+                ]);
+            }
+
+            if (!empty($dist['children'])) {
+                $this->saveDistributors($dist['children'], $distributor->id);
+            }
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Distributor $distributor)
+    public function fetchTreeData()
     {
-        //
-    }
+        $distributors = Distributor::all()->keyBy('id');
+        $relationships = DistributorRelationship::all();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Distributor $distributor)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Distributor $distributor)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Distributor $distributor)
-    {
-        //
+        return response()->json([
+            'distributors' => $distributors,
+            'relationships' => $relationships,
+        ]);
     }
 }

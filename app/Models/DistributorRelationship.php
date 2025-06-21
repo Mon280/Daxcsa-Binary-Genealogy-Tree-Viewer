@@ -11,14 +11,4 @@ class DistributorRelationship extends Model
         'child_id',
         'binary_placement',
     ];
-
-    public function parent()
-    {
-        return $this->belongsTo(Distributor::class, 'parent_id');
-    }
-
-    public function child()
-    {
-        return $this->belongsTo(Distributor::class, 'child_id');
-    }
 }

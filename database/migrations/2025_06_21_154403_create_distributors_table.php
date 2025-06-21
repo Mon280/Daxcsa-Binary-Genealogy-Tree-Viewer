@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('username');
             $table->string('full_name');
             $table->string('status');
-            $table->string('product_name');
-            $table->string('category_name');
+            $table->string('product_name')->nullable();
+            $table->string('category_name')->nullable();
             $table->timestamps();
         });
     }

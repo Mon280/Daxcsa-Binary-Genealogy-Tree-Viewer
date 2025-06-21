@@ -120,7 +120,7 @@ html {
     color: white;
 }
 
-.purple-text{
+.purple-text {
     color: #9d6ef5;
 }
 
@@ -149,6 +149,7 @@ html {
 #loading-spinner {
     margin-top: 1rem;
 }
+
 .upload-icon-with-close {
     position: relative;
     display: inline-block;
@@ -169,3 +170,31 @@ html {
     cursor: pointer;
     user-select: none;
 }
+
+@media (max-width: 768px) {
+
+    .full-height {
+        min-height: 60vh;
+    }
+
+    @media (max-width: 768px) {
+        #bg-video {
+            position: fixed;
+            top: 50%;
+            left: 80%;
+            right: auto;
+            bottom: auto;
+            width: 90%;
+            height: auto;
+            max-width: none;
+            transform: translateX(-50%);
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+}
+
+
+
+

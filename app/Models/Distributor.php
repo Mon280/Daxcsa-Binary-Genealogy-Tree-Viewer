@@ -14,14 +14,4 @@ class Distributor extends Model
         'product_name',
         'category_name',
     ];
-
-    public function parent()
-    {
-        return $this->belongsTo(Distributor::class, 'parent_id');
-    }
-
-    public function children()
-    {
-        return $this->hasMany(Distributor::class, 'parent_id');
-    }
 }

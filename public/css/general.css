@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'MontserratBold';
+    src: url('../fonts/MontserratAlternates-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'MontserratLight';
+    src: url('../fonts/MontserratAlternates-Light.ttf') format('truetype');
+}
+
+.font-bold {
+    font-family: 'MontserratBold', sans-serif;
+}
+
+.font-light {
+    font-family: 'MontserratLight', sans-serif;
+}
